@@ -64,7 +64,7 @@ body{
     width: 400px;
 }
 
-input, select{
+select{
     padding: 10px 20px;
     background-color: #b0b6ba;
     width: 100%;
@@ -79,11 +79,6 @@ input, select{
 
 ::placeholder{
     color: #000000;
-}
-
-input:hover{
-    cursor: pointer;
-    background-color: #5c5c5c;
 }
 
 select:hover{

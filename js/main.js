@@ -44,9 +44,9 @@
 const form = document.getElementById('formulario-busqueda');
 const tipoTransaccionInput = document.getElementsByName('tipoTransaccion')[0];
 const tipoPropiedadInput = document.getElementsByName('tipoPropiedad')[0];
-const ambientesInput = document.getElementById('ambientes');
-const precioMinimoInput = document.getElementById('priceMin');
-const precioMaximoInput = document.getElementById('priceMax');
+const ambientesInput = document.getElementsByName('ambientes')[0];
+const precioMinimoInput = document.getElementsByName('precioMinimo')[0];
+const precioMaximoInput = document.getElementsByName('precioMaximo')[0];
 const barrioInput = document.getElementsByName('barrio')[0];
 // Escuchar el evento submit del formulario
 form.addEventListener('submit', function(e) {
@@ -55,16 +55,16 @@ form.addEventListener('submit', function(e) {
     // Obtener los valores de los campos de entrada
     const tipoTransaccion = tipoTransaccionInput.value;
     const tipoPropiedad = tipoPropiedadInput.value;
-    const ambientes = ambientesInput.value;
-    const precioMinimo = precioMinimoInput.value;
-    const precioMaximo = precioMaximoInput.value;
+    const ambientes = ambientesInput.value.toString();
+    const precioMinimo = precioMinimoInput.value.toString();
+    const precioMaximo = precioMaximoInput.value.toString();
     const barrio = barrioInput.value;
   
     // Filtrar las propiedades según los valores ingresados por el usuario
     const propiedadesFiltradas = propiedades.data.filter(function(propiedad) {
         return (tipoTransaccion === '' || propiedad.opcion === tipoTransaccion) &&
                (tipoPropiedad === '' || propiedad.tipo === tipoPropiedad) &&
-               (ambientes === '' || propiedad.ambientes === parseInt(ambientes)) &&
+               (ambientes === '' || propiedad.ambientes === ambientes) &&
                (precioMinimo === '' || propiedad.precio >= parseInt(precioMinimo)) &&
                (precioMaximo === '' || propiedad.precio <= parseInt(precioMaximo)) &&
                (barrio === '' || propiedad.barrio === barrio);
