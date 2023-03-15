@@ -1,45 +1,3 @@
-/*for (let i of propiedades.data){
-    //Crear tarjeta
-    let card = document.createElement("div");
-    card.classList.add("card", "i.category");
-    // imagen div
-    let imgContainer = document.createElement("div");
-    imgContainer.classList.add("image-container");
-    //img
-    let image = document.createElement("img");
-    image.setAttribute("src", i.image);
-    imgContainer.appendChild(image);
-    card.appendChild(imgContainer);
-    //container
-    let container = document.createElement("div");
-    container.classList.add("container");
-    //nombre de la propiedad
-    let name = document.createElement("h4");
-    name.classList.add("propiedad-name");
-    name.innerText = i.propiedadNombre.toUpperCase();
-    container.appendChild(name);
-    //opcion
-    let opcion = document.createElement("h5");
-    opcion.innerText = "En " + i.opcion;
-    container.appendChild(opcion);
-    //ambientes
-    let ambientes = document.createElement("p");
-    ambientes.innerText = "Cantidad de ambientes: " + i.ambientes;
-    container.appendChild(ambientes);
-    //precio
-    let precio = document.createElement("p");
-    precio.innerText = "USD " + i.precio;
-    container.appendChild(precio);
-    //barrio
-    let barrio = document.createElement("p");
-    barrio.innerText = "Barrio: " + i.barrio;
-    container.appendChild(barrio);
-
-    card.appendChild(container);
-    document.getElementById("propiedades").appendChild(card);
-}
-*/
-
 // Obtener el formulario y los campos de entrada
 const form = document.getElementById('formulario-busqueda');
 const tipoTransaccionInput = document.getElementsByName('tipoTransaccion')[0];
@@ -48,16 +6,17 @@ const ambientesInput = document.getElementsByName('ambientes')[0];
 const precioMinimoInput = document.getElementsByName('precioMinimo')[0];
 const precioMaximoInput = document.getElementsByName('precioMaximo')[0];
 const barrioInput = document.getElementsByName('barrio')[0];
+
 // Escuchar el evento submit del formulario
 form.addEventListener('submit', function(e) {
-    e.preventDefault(); // Evitar que se envíe el formulario
+    e.preventDefault();
   
     // Obtener los valores de los campos de entrada
     const tipoTransaccion = tipoTransaccionInput.value;
     const tipoPropiedad = tipoPropiedadInput.value;
-    const ambientes = ambientesInput.value.toString();
-    const precioMinimo = precioMinimoInput.value.toString();
-    const precioMaximo = precioMaximoInput.value.toString();
+    const ambientes = ambientesInput.value;
+    const precioMinimo = precioMinimoInput.value;
+    const precioMaximo = precioMaximoInput.value;
     const barrio = barrioInput.value;
   
     // Filtrar las propiedades según los valores ingresados por el usuario
@@ -69,9 +28,17 @@ form.addEventListener('submit', function(e) {
                (precioMaximo === '' || propiedad.precio <= parseInt(precioMaximo)) &&
                (barrio === '' || propiedad.barrio === barrio);
       });
+
   // Mostrar las propiedades filtradas en pantalla
   const propiedadesContainer = document.getElementById('propiedades');
   propiedadesContainer.innerHTML = '';
+
+  if (propiedadesFiltradas.length === 0) {
+    const mensaje = document.createElement('p');
+    mensaje.classList.add('noPropiedades');
+    mensaje.innerText = "No se encontraron propiedades.";
+    propiedadesContainer.appendChild(mensaje);
+  }
 
   propiedadesFiltradas.forEach(function(propiedad) {
     // Crear la tarjeta de la propiedad
@@ -109,3 +76,9 @@ form.addEventListener('submit', function(e) {
 
     propiedadesContainer.appendChild(card);
   })})  
+
+  //Guardar las propiedades en el Storage
+  function guardarDatos(clave, valor){
+    localStorage.setItem(clave, valor);
+  }
+  guardarDatos('lista', JSON.stringify(propiedades.data))
